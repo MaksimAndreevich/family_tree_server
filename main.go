@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "gitlab.com/geno-tree/go-back/internal/router"
 
 func main() {
-	fmt.Println("Hello GENO")
+	router.InitRouter()
 }
