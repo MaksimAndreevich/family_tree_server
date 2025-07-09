@@ -29,6 +29,31 @@
   > Для общения с бд буду использовать ORM [Gorm](https://gorm.io/). В ручную sql запросы я написался на проекте с [парсингом данных](https://gitlab.com/scdb/server/-/blob/main/internal/repository/getOrganisations.go?ref_type=heads) - здесь хочу поиграться с ORM
 - [Docker](https://www.docker.com/)
 
+В приложени все построено на двух основных моделях это Person и Relationshop.
+Так же есть модель User - она нужна для персонализации дерева и приватности.
+Связи между люди реализованы как графы.
+Ребрами являются Person (люди), а узлами являются Relationshop (связи)
+
+### Запуск
+
+1. Поднять контейнер с базой данных
+
+```bash
+   docker-compose up -d
+```
+
+2. Сделать авто миграцию (если таблиц еще не существвует в бд)
+
+```bash
+   go run migrations/auto.go
+```
+
+3. Запустить сервер
+
+```bash
+   go run main.go
+```
+
 ## Frontend
 
 ### Технологии и стэк
