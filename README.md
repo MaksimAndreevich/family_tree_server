@@ -1,0 +1,40 @@
+# GENO TREE
+
+Приложение для создания своего семейного дерева
+
+### Цели
+
+1. Демонстрация навыков.
+   > Приложение создано как showcase-проект для демонстрации моих технических и архитектурных навыков при отклике на вакансии.
+2. Попробовать возможности языка программирования [Golang](https://go.dev/).
+   > Golang выбран в первую очерелдь для его изучения, а так же для сравнения его с node js - в частности с фреймворком [NestJS](https://nestjs.com/)
+3. 3D визуализация.
+   > Всегда было желание пощуать 3D графику на базе js. Приложение с графами семейного дерева как раз для этого подходит.
+4. Для себя.
+   > Для создания собственного семейного дерева
+
+### Функционал
+
+- Регистрация/авторизация. Для персонализации данных каждого пользователя
+- Создания персон в семейном дереве и связей между ними
+- Возможность скачать дерево ввиде pdf документа
+
+## Backend
+
+### Технологии и стэк
+
+- [Golang 1.24](https://tip.golang.org/doc/go1.24)
+- REST API, созданное с помощью Go-пакета [Gin](https://github.com/gin-gonic/gin)
+- База данных [Postgresql](https://www.postgresql.org/)
+  > Для общения с бд буду использовать ORM [Gorm](https://gorm.io/). В ручную sql запросы я написался на проекте с [парсингом данных](https://gitlab.com/scdb/server/-/blob/main/internal/repository/getOrganisations.go?ref_type=heads) - здесь хочу поиграться с ORM
+- [Docker](https://www.docker.com/)
+
+## Frontend
+
+### Технологии и стэк
+
+- [NextJS](https://nextjs.org/)
+- [ThreeJS](https://threejs.org/)
+- [TanStack Query](https://tanstack.com/query/latest/docs/framework/react/overview)
+- [Docker](https://www.docker.com/)
+- [Sass](https://sass-lang.com/)

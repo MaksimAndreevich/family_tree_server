@@ -1,5 +1,6 @@
 services:
   backend:
+    container_name: geno-tree-server
     build:
       context: .
     env_file: .env
@@ -10,11 +11,12 @@ services:
         condition: service_healthy
 
   db:
-    image: postgres
+    container_name: geno-tree-db
+    image: postgres:17.5
     restart: always
     user: postgres
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - ./db-data:/var/lib/postgresql/data
     env_file: .env
     environment:
       - POSTGRES_DB=geno-tree-db
@@ -25,6 +27,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
+    ports:
+      - "5432:5432"
 volumes:
   db-data:
