@@ -28,6 +28,7 @@
 - База данных [Postgresql](https://www.postgresql.org/)
   > Для общения с бд буду использовать ORM [Gorm](https://gorm.io/). В ручную sql запросы я написался на проекте с [парсингом данных](https://gitlab.com/scdb/server/-/blob/main/internal/repository/getOrganisations.go?ref_type=heads) - здесь хочу поиграться с ORM
 - [Docker](https://www.docker.com/)
+- JWT авторизация
 
 В приложени все построено на двух основных моделях это Person и Relationshop.
 Так же есть модель User - она нужна для персонализации дерева и приватности.

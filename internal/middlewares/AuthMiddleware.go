@@ -1,4 +1,0 @@
-package middlewares
-
-func AuthMiddlewate() {
-}

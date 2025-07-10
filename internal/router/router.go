@@ -1,19 +1,32 @@
 package router
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"gitlab.com/geno-tree/go-back/internal/controllers"
+	"gitlab.com/geno-tree/go-back/internal/middlewares"
+	"gitlab.com/geno-tree/go-back/internal/services"
 )
 
-func InitRouter() {
+type Controllers struct {
+	AuthController *controllers.AuthController
+}
+
+func InitRouter(constollers *Controllers, authService *services.AuthService) {
 	r := gin.Default()
 
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
+	// публичные маршруты
+	public := r.Group("/api")
+	{
+		public.POST("auth/login", constollers.AuthController.Login)
+		public.POST("auth/register", constollers.AuthController.Register)
+	}
+
+	// Защищенные маршруты
+	protected := r.Group("/api")
+	protected.Use(middlewares.AuthMiddleware(authService))
+	{
+		protected.POST("/profile", constollers.AuthController.GetProfile)
+	}
 
 	r.Run()
 }
