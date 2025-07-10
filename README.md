@@ -55,6 +55,10 @@
    go run main.go
 ```
 
+### Postman
+
+В проекте есть json [файл](./docs/postman_collection.json) с коллекцией для [Postman](https://learning.postman.com/docs/design-apis/api-builder/importing-an-api/). Вы можете импортировать ее в свое приложение Postman как для дальнейшего тестирования API, так и для чтения документации.
+
 ## Frontend
 
 ### Технологии и стэк

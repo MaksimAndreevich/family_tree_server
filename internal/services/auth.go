@@ -2,9 +2,14 @@ package services
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
+	"gitlab.com/geno-tree/go-back/internal/configs"
 	"gitlab.com/geno-tree/go-back/internal/models"
 	"gitlab.com/geno-tree/go-back/internal/repositories"
 	"golang.org/x/crypto/bcrypt"
@@ -12,11 +17,13 @@ import (
 
 type AuthService struct {
 	userRepository *repositories.UserRepository
+	config         *configs.Config
 }
 
-func NewAuthService(userRepository *repositories.UserRepository) *AuthService {
+func NewAuthService(userRepository *repositories.UserRepository, config *configs.Config) *AuthService {
 	return &AuthService{
 		userRepository: userRepository,
+		config:         config,
 	}
 }
 
@@ -38,6 +45,13 @@ type AuthResponse struct {
 	Token string      `json:"token"`
 }
 
+type JWTClaims struct {
+	UserID   uint   `json:"user_id"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	jwt.RegisteredClaims
+}
+
 func (as *AuthService) Login(c *gin.Context) {
 	var loginRequest LoginRequest
 
@@ -57,7 +71,11 @@ func (as *AuthService) Login(c *gin.Context) {
 		return
 	}
 
-	token := as.generateToken(user)
+	token, err := as.generateToken(user)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка генерации токена"})
+		return
+	}
 
 	response := AuthResponse{
 		User:  *user,
@@ -98,7 +116,11 @@ func (as *AuthService) Register(c *gin.Context) {
 		return
 	}
 
-	token := as.generateToken(user)
+	token, err := as.generateToken(user)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка генерации токена"})
+		return
+	}
 
 	response := AuthResponse{
 		User:  *user,
@@ -108,16 +130,68 @@ func (as *AuthService) Register(c *gin.Context) {
 	c.JSON(http.StatusCreated, response)
 }
 
-// generateToken генерирует JWT токен (упрощенная версия)
-func (as *AuthService) generateToken(user *models.User) string {
-	// Здесь должна быть реальная генерация JWT токена
-	// Пока возвращаем простую строку
-	return "token_" + user.Username + "_" + user.Email
+// generateToken генерирует JWT токен с правильным временем истечения
+func (as *AuthService) generateToken(user *models.User) (string, error) {
+
+	expireTime, err := strconv.Atoi(as.config.JWTExpire)
+	if err != nil {
+		return "", err
+	}
+
+	// Создаем claims с временем истечения
+	claims := JWTClaims{
+		UserID:   user.ID,
+		Username: user.Username,
+		Email:    user.Email,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Duration(expireTime) * time.Hour)),
+		},
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	// Подписываем токен
+	tokenString, err := token.SignedString([]byte(as.config.JWTSecret))
+	if err != nil {
+		return "", err
+	}
+
+	return tokenString, nil
 }
 
-// ValidateToken валидирует токен
-func (as *AuthService) ValidateToken(token string) (*models.User, error) {
-	// Здесь должна быть реальная валидация JWT токена
-	// Пока возвращаем ошибку
-	return nil, errors.New("токен недействителен")
+func (as *AuthService) ValidateToken(tokenString string) (*models.User, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &JWTClaims{}, func(token *jwt.Token) (interface{}, error) {
+		// Проверяем метод подписи
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("неожиданный метод подписи: %v", token.Header["alg"])
+		}
+		return []byte(as.config.JWTSecret), nil
+	})
+
+	if err != nil {
+		return nil, fmt.Errorf("ошибка парсинга токена: %w", err)
+	}
+
+	// Проверяем валидность токена
+	if !token.Valid {
+		return nil, errors.New("недействительный токен")
+	}
+
+	// Извлекаем claims
+	claims, ok := token.Claims.(*JWTClaims)
+	if !ok {
+		return nil, errors.New("неверный формат токена")
+	}
+
+	// Проверяем, не истек ли токен
+	if claims.ExpiresAt != nil && claims.ExpiresAt.Time.Before(time.Now()) {
+		return nil, errors.New("токен истек")
+	}
+
+	user, err := as.userRepository.FindUserByEmail(claims.Email)
+	if err != nil {
+		return nil, fmt.Errorf("ошибка получения пользователя: %w", err)
+	}
+
+	return user, nil
 }

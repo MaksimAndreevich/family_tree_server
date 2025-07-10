@@ -1,0 +1,218 @@
+{
+	"info": {
+		"_postman_id": "7f06b613-2829-4a1a-bdce-9197f139e94e",
+		"name": "GENO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21202443"
+	},
+	"item": [
+		{
+			"name": "Регистрация",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{$randomEmail}}\",\n    \"username\": \"{{$randomUserName}}\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}auth/register",
+					"host": [
+						"{{URL}}auth"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Успешный ответ",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{$randomEmail}}\",\n    \"username\": \"{{$randomUserName}}\",\n    \"password\": \"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}auth/register",
+							"host": [
+								"{{URL}}auth"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Jul 2025 19:13:55 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "271"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"user\": {\n        \"ID\": 1,\n        \"CreatedAt\": \"2025-07-10T22:13:55.866457+03:00\",\n        \"UpdatedAt\": \"2025-07-10T22:13:55.866457+03:00\",\n        \"DeletedAt\": null,\n        \"username\": \"Esta_Wehner\",\n        \"email\": \"Garry_Lindgren21@yahoo.com\",\n        \"is_email_verified\": false\n    },\n    \"token\": \"token_Esta_Wehner_Garry_Lindgren21@yahoo.com\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Авторизация",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"Murray_Macejkovic7@hotmail.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}auth/login",
+					"host": [
+						"{{URL}}auth"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Успешный ответ",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"Murray_Macejkovic7@hotmail.com\",\n    \"username\": \"{{$randomUserName}}\",\n    \"password\": \"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}auth/login",
+							"host": [
+								"{{URL}}auth"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Jul 2025 19:20:04 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "273"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"user\": {\n        \"ID\": 2,\n        \"CreatedAt\": \"2025-07-10T22:15:18.054675+03:00\",\n        \"UpdatedAt\": \"2025-07-10T22:15:18.054675+03:00\",\n        \"DeletedAt\": null,\n        \"username\": \"Emelia62\",\n        \"email\": \"Murray_Macejkovic7@hotmail.com\",\n        \"is_email_verified\": false\n    },\n    \"token\": \"token_Emelia62_Murray_Macejkovic7@hotmail.com\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Профиль пользователя",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6IkVtZWxpYTYyIiwiZW1haWwiOiJNdXJyYXlfTWFjZWprb3ZpYzdAaG90bWFpbC5jb20iLCJleHAiOjE3NTIxODEzNDZ9.HaFK3jCfykSgi-sx427ChkOXfTrmsuaMwydzvON4B5U",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"Murray_Macejkovic7@hotmail.com\",\n    \"password\": \"12345678\"\n}"
+				},
+				"url": {
+					"raw": "{{URL}}profile",
+					"host": [
+						"{{URL}}profile"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": " http://localhost:8080/api/",
+			"type": "string"
+		}
+	]
+}

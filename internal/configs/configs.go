@@ -9,12 +9,14 @@ import (
 )
 
 type Config struct {
-	Host     string
-	Port     string
-	User     string
-	Password string
-	DBName   string
-	SSLMode  string
+	Host      string
+	Port      string
+	User      string
+	Password  string
+	DBName    string
+	SSLMode   string
+	JWTSecret string
+	JWTExpire string
 }
 
 func NewConfig() *Config {
@@ -27,12 +29,14 @@ func NewConfig() *Config {
 	}
 
 	return &Config{
-		Host:     getEnv("POSTGRES_HOST", "localhost"),
-		Port:     getEnv("POSTGRES_PORT", "5432"),
-		User:     getEnv("POSTGRES_USER", "postgres"),
-		Password: getEnv("POSTGRES_PASSWORD", "postgres"),
-		DBName:   getEnv("POSTGRES_NAME", "geno-tree-db"),
-		SSLMode:  getEnv("POSTGRES_SSL_MODE", "disable"),
+		Host:      getEnv("POSTGRES_HOST", "localhost"),
+		Port:      getEnv("POSTGRES_PORT", "5432"),
+		User:      getEnv("POSTGRES_USER", "postgres"),
+		Password:  getEnv("POSTGRES_PASSWORD", "postgres"),
+		DBName:    getEnv("POSTGRES_NAME", "geno-tree-db"),
+		SSLMode:   getEnv("POSTGRES_SSL_MODE", "disable"),
+		JWTSecret: getEnv("JWT_SECRET", ""),
+		JWTExpire: getEnv("JWT_EXPIRE", "1"),
 	}
 }
 

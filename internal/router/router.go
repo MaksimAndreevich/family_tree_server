@@ -25,7 +25,7 @@ func InitRouter(constollers *Controllers, authService *services.AuthService) {
 	protected := r.Group("/api")
 	protected.Use(middlewares.AuthMiddleware(authService))
 	{
-		protected.POST("/profile", constollers.AuthController.GetProfile)
+		protected.GET("/profile", constollers.AuthController.GetProfile)
 	}
 
 	r.Run()
