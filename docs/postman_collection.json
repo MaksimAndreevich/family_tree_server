@@ -559,6 +559,42 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Получение дерева",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{AUTH_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}tree",
+					"host": [
+						"{{URL}}tree"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
