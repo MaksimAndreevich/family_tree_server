@@ -165,7 +165,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6IkVtZWxpYTYyIiwiZW1haWwiOiJNdXJyYXlfTWFjZWprb3ZpYzdAaG90bWFpbC5jb20iLCJleHAiOjE3NTIxODEzNDZ9.HaFK3jCfykSgi-sx427ChkOXfTrmsuaMwydzvON4B5U",
+							"value": "{{AUTH_TOKEN}}",
 							"type": "string"
 						}
 					]
@@ -180,6 +180,381 @@
 					"raw": "{{URL}}profile",
 					"host": [
 						"{{URL}}profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создание человека",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{AUTH_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"{{$randomFirstName}}\",\n    \"last_name\": \"{{$randomLastName}}\",\n    \"middle_name\": \"Иванович\",\n    \"gender\": \"male\",\n    \"birth_date\": \"{{$isoTimestamp}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}persons",
+					"host": [
+						"{{URL}}persons"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Успешный ответ",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"Иван\",\n    \"last_name\": \"Иванов\",\n    \"middle_name\": \"Иванович\",\n    \"gender\": \"male\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}persons",
+							"host": [
+								"{{URL}}persons"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 14 Jul 2025 18:10:59 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "496"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"person\": {\n        \"ID\": 3,\n        \"CreatedAt\": \"2025-07-14T21:10:59.010743+03:00\",\n        \"UpdatedAt\": \"2025-07-14T21:10:59.010743+03:00\",\n        \"DeletedAt\": null,\n        \"first_name\": \"Иван\",\n        \"last_name\": \"Иванов\",\n        \"middle_name\": \"Иванович\",\n        \"maiden_name\": \"\",\n        \"gender\": \"male\",\n        \"birth_date\": null,\n        \"birth_place\": \"\",\n        \"death_date\": null,\n        \"death_place\": \"\",\n        \"is_alive\": true,\n        \"email\": \"\",\n        \"phone\": \"\",\n        \"address\": \"\",\n        \"biography\": \"\",\n        \"notes\": \"\",\n        \"photo_url\": \"\",\n        \"created_by_user_id\": 2,\n        \"relationships_as_person1\": null,\n        \"relationships_as_person2\": null\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Получение всех  созданных людей",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{AUTH_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}persons",
+					"host": [
+						"{{URL}}persons"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Успешный ответ",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"Иван\",\n    \"last_name\": \"Иванов\",\n    \"middle_name\": \"Иванович\",\n    \"gender\": \"male\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}persons",
+							"host": [
+								"{{URL}}persons"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 14 Jul 2025 18:11:21 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "985"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"persons\": [\n        {\n            \"ID\": 2,\n            \"CreatedAt\": \"2025-07-14T21:10:24.359436+03:00\",\n            \"UpdatedAt\": \"2025-07-14T21:10:24.359436+03:00\",\n            \"DeletedAt\": null,\n            \"first_name\": \"Иван\",\n            \"last_name\": \"Иванов\",\n            \"middle_name\": \"Иванович\",\n            \"maiden_name\": \"\",\n            \"gender\": \"male\",\n            \"birth_date\": null,\n            \"birth_place\": \"\",\n            \"death_date\": null,\n            \"death_place\": \"\",\n            \"is_alive\": true,\n            \"email\": \"\",\n            \"phone\": \"\",\n            \"address\": \"\",\n            \"biography\": \"\",\n            \"notes\": \"\",\n            \"photo_url\": \"\",\n            \"created_by_user_id\": 2,\n            \"relationships_as_person1\": null,\n            \"relationships_as_person2\": null\n        },\n        {\n            \"ID\": 3,\n            \"CreatedAt\": \"2025-07-14T21:10:59.010743+03:00\",\n            \"UpdatedAt\": \"2025-07-14T21:10:59.010743+03:00\",\n            \"DeletedAt\": null,\n            \"first_name\": \"Иван\",\n            \"last_name\": \"Иванов\",\n            \"middle_name\": \"Иванович\",\n            \"maiden_name\": \"\",\n            \"gender\": \"male\",\n            \"birth_date\": null,\n            \"birth_place\": \"\",\n            \"death_date\": null,\n            \"death_place\": \"\",\n            \"is_alive\": true,\n            \"email\": \"\",\n            \"phone\": \"\",\n            \"address\": \"\",\n            \"biography\": \"\",\n            \"notes\": \"\",\n            \"photo_url\": \"\",\n            \"created_by_user_id\": 2,\n            \"relationships_as_person1\": null,\n            \"relationships_as_person2\": null\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Поиск людей",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{AUTH_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}persons?q=Иван",
+					"host": [
+						"{{URL}}persons"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Иван"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение человека по ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{AUTH_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}persons/2",
+					"host": [
+						"{{URL}}persons"
+					],
+					"path": [
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновление человека",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{AUTH_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\":\"Новое\",\n    \"last_name\": \"Новая фамилия\",\n    \"gender\": \"male\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}persons/2",
+					"host": [
+						"{{URL}}persons"
+					],
+					"path": [
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновление человека Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{AUTH_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}persons/2",
+					"host": [
+						"{{URL}}persons"
+					],
+					"path": [
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создание связи",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{AUTH_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"person1_id\": 4,\n    \"person2_id\": 4,\n    \"type\": \"parent\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}relationships",
+					"host": [
+						"{{URL}}relationships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновление связи",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{AUTH_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"person1_id\": 4,\n    \"person2_id\": 4,\n    \"type\": \"aunt\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}relationships/1",
+					"host": [
+						"{{URL}}relationships"
+					],
+					"path": [
+						"1"
 					]
 				}
 			},
@@ -212,6 +587,11 @@
 		{
 			"key": "URL",
 			"value": " http://localhost:8080/api/",
+			"type": "string"
+		},
+		{
+			"key": "AUTH_TOKEN",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6IkVtZWxpYTYyIiwiZW1haWwiOiJNdXJyYXlfTWFjZWprb3ZpYzdAaG90bWFpbC5jb20iLCJleHAiOjE3NTI1MTk5MDN9.-mvfCSv05fLMheYJSWB7O1cGX7RnZHFjVtf8BzE6vLg",
 			"type": "string"
 		}
 	]

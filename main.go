@@ -15,13 +15,22 @@ func main() {
 
 	// repositories
 	userRepository := repositories.NewUserRepository(db)
+	personRepository := repositories.NewPersonRepository(db)
+	relationshipRepository := repositories.NewRelationshipRepository(db)
 	// services
 	authService := services.NewAuthService(userRepository, config)
+	treeService := services.NewTreeService(personRepository, relationshipRepository)
 	// controllers
 	authController := controllers.NewAuthController(authService)
+	personController := controllers.NewPersonController(treeService)
+	relationshipController := controllers.NewRelationshipController(treeService)
+	treeController := controllers.NewTreeController(treeService)
 
 	router.InitRouter(&router.Controllers{
-		AuthController: authController,
+		AuthController:         authController,
+		PersonController:       personController,
+		RelationshipController: relationshipController,
+		TreeController:         treeController,
 	}, authService)
 
 }
