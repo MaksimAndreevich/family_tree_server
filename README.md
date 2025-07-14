@@ -59,12 +59,4 @@
 
 В проекте есть json [файл](./docs/postman_collection.json) с коллекцией для [Postman](https://learning.postman.com/docs/design-apis/api-builder/importing-an-api/). Вы можете импортировать ее в свое приложение Postman как для дальнейшего тестирования API, так и для чтения документации.
 
-## Frontend
-
-### Технологии и стэк
-
-- [NextJS](https://nextjs.org/)
-- [ThreeJS](https://threejs.org/)
-- [TanStack Query](https://tanstack.com/query/latest/docs/framework/react/overview)
-- [Docker](https://www.docker.com/)
-- [Sass](https://sass-lang.com/)
+## Frontend можно посмотреть [тут](https://github.com/MaksimAndreevich/family_tree_web)
